@@ -1,2 +1,0 @@
-# baseball_0610_backend
-baseball_0610_backend
