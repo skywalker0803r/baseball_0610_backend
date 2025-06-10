@@ -125,17 +125,17 @@ async def analyze_video_websocket(websocket: WebSocket, filename: str):
 
             _, buffer = cv2.imencode('.jpg', image, [int(cv2.IMWRITE_JPEG_QUALITY), 70])
             jpg_as_text = buffer.tobytes()
-
+            await websocket.send_bytes(jpg_as_text) # 這裡發送圖片
             await manager.send_personal_message(
                 {
-                    "frame_data": jpg_as_text.decode('latin-1'),
+                    # "frame_data": jpg_as_text.decode('latin-1'), # 這裡就不要發了 
                     "frame_num": frame_count,
                     "landmarks": [{"id": id, "x": lm.x, "y": lm.y, "z": lm.z, "visibility": lm.visibility, "px": cx, "py": cy} for id,lm in enumerate(landmarks_data)],
                     "metrics": metrics if 'metrics' in locals() else {}
                 },
                 websocket
             )
-            await asyncio.sleep(0.01)
+            # await asyncio.sleep(0.01) # 不要等
 
     except WebSocketDisconnect:
         print(f"WebSocket client disconnected during analysis.")
