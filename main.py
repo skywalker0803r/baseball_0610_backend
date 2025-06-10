@@ -17,7 +17,7 @@ app = FastAPI()
 # 允許所有來源進行CORS，因為前端部署在S3，與後端網域不同
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://baseball-0610-frontend.onrender.com"],  # 實際部署時請替換為您的S3前端網域
+    allow_origins=["*"],  # 實際部署時請替換為您的S3前端網域
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
